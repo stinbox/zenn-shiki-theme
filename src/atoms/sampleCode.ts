@@ -26,6 +26,7 @@ const sampleCodeImporters: Record<
   markdown: () => import("../sampleCodes/markdown.md?raw"),
   sql: () => import("../sampleCodes/sql.sql?raw"),
   bash: () => import("../sampleCodes/bash.sh?raw"),
+  diff: () => import("../sampleCodes/diff-typescript.ts?raw"),
 };
 
 export const sampleCodeAtomFamily = atomFamily((lang: SupportedLanguage) =>

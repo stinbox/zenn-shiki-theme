@@ -9,6 +9,8 @@ import {
 } from "shiki";
 import type { SupportedLanguage } from "../constants/languages";
 import { sampleCodeAtomFamily } from "./sampleCode";
+import { createDiffTransformer } from "../transformers/diffTransformer";
+import "../transformers/diffTransformer.css";
 
 // Shikiハイライターインスタンス（シングルトン）
 export const shikiHighlighterAtom = atom<Promise<Highlighter>>(async () => {
@@ -45,6 +47,7 @@ const shikiLanguageImportMap: Record<
   markdown: () => bundledLanguages.markdown(),
   sql: () => bundledLanguages.sql(),
   bash: () => bundledLanguages.bash(),
+  diff: () => bundledLanguages.typescript(), // diff は typescript でハイライト
 };
 
 // 言語定義モジュールを管理するatomFamily
@@ -67,8 +70,9 @@ export const shikiHighlightedCodeAtomFamily = atomFamily(
       highlighter.loadLanguageSync(langModule);
 
       return highlighter.codeToHtml(code, {
-        lang,
+        lang: lang === "diff" ? "typescript" : lang,
         theme: "nord",
+        transformers: [createDiffTransformer()],
       });
     })
 );

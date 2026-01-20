@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', 'src/sampleCodes']),
+  globalIgnores(['dist', 'src/sampleCodes', 'zenn-editor']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

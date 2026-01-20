@@ -47,6 +47,7 @@ const prismLanguageMap: Record<SupportedLanguage, string> = {
   markdown: "markdown",
   sql: "sql",
   bash: "bash",
+  diff: "typescript", // diff は typescript としてハイライト（diff transformerなし）
 };
 
 // ハイライト済みHTML atomFamily

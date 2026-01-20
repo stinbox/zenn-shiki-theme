@@ -1,0 +1,12 @@
+/* Shiki diff styles */
+.shiki .line.diff.add {
+  background: rgba(0, 146, 27, 0.2);
+}
+
+.shiki .line.diff.remove {
+  background: rgba(218, 54, 50, 0.2);
+}
+
+.shiki .diff-prefix {
+  user-select: none;
+}

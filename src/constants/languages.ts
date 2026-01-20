@@ -19,6 +19,7 @@ export const SUPPORTED_LANGUAGES = [
   { id: "markdown", label: "Markdown" },
   { id: "sql", label: "SQL" },
   { id: "bash", label: "Bash" },
+  { id: "diff", label: "Diff (TypeScript)" },
 ] as const;
 
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number]["id"];
