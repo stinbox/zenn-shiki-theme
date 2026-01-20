@@ -1,0 +1,3 @@
+[submodule "zenn-editor"]
+	path = zenn-editor
+	url = https://github.com/zenn-dev/zenn-editor.git
