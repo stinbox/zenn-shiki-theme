@@ -11,7 +11,7 @@ const locationAtom = atomWithLocation();
 export const selectedLanguageAtom = atom(
   (get) => {
     const location = get(locationAtom);
-    const langParam = location.searchParams?.get("lang");
+    const langParam = location.searchParams?.get("lang") ?? null;
     return isValidLanguage(langParam) ? langParam : DEFAULT_LANGUAGE;
   },
   (get, set, newLang: SupportedLanguage) => {
