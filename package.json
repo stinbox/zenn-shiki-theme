@@ -10,13 +10,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.18",
+    "jotai": "^2.16.2",
+    "jotai-eager": "^0.2.4",
+    "jotai-family": "^1.0.1",
+    "jotai-location": "^0.6.2",
+    "prismjs": "^1.30.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "shiki": "^3.21.0",
+    "tailwindcss": "^4.1.18",
     "zenn-content-css": "^0.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.1",
+    "@types/prismjs": "^1.26.5",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",

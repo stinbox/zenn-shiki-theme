@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/user.schema.json",
+  "title": "User Profile Schema",
+  "description": "A comprehensive JSON schema for user profiles",
+  "type": "object",
+
+  "properties": {
+    "id": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Unique identifier for the user"
+    },
+    "uuid": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "username": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 32,
+      "pattern": "^[a-zA-Z][a-zA-Z0-9_-]*$"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "profile": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lastName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "displayName": {
+          "type": ["string", "null"]
+        },
+        "bio": {
+          "type": "string",
+          "maxLength": 500,
+          "default": ""
+        },
+        "avatar": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "width": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "height": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": ["url"]
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "format": "date"
+        },
+        "age": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 150
+        }
+      },
+      "required": ["firstName", "lastName"]
+    },
+    "contact": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "pattern": "^\\+?[1-9]\\d{1,14}$"
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "street": { "type": "string" },
+            "city": { "type": "string" },
+            "state": { "type": "string" },
+            "postalCode": { "type": "string" },
+            "country": {
+              "type": "string",
+              "enum": ["US", "CA", "GB", "DE", "FR", "JP", "AU"]
+            }
+          },
+          "required": ["city", "country"]
+        },
+        "socialLinks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "platform": {
+                "type": "string",
+                "enum": ["twitter", "github", "linkedin", "website"]
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "required": ["platform", "url"]
+          },
+          "maxItems": 10
+        }
+      }
+    },
+    "preferences": {
+      "type": "object",
+      "properties": {
+        "theme": {
+          "type": "string",
+          "enum": ["light", "dark", "system"],
+          "default": "system"
+        },
+        "language": {
+          "type": "string",
+          "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
+          "default": "en"
+        },
+        "timezone": {
+          "type": "string",
+          "default": "UTC"
+        },
+        "notifications": {
+          "type": "object",
+          "properties": {
+            "email": { "type": "boolean", "default": true },
+            "push": { "type": "boolean", "default": false },
+            "sms": { "type": "boolean", "default": false },
+            "frequency": {
+              "type": "string",
+              "enum": ["instant", "daily", "weekly"],
+              "default": "daily"
+            }
+          },
+          "additionalProperties": false
+        },
+        "privacy": {
+          "type": "object",
+          "properties": {
+            "profileVisibility": {
+              "type": "string",
+              "enum": ["public", "friends", "private"],
+              "default": "public"
+            },
+            "showEmail": { "type": "boolean", "default": false },
+            "showActivity": { "type": "boolean", "default": true }
+          }
+        }
+      }
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["user", "moderator", "admin", "superadmin"]
+      },
+      "uniqueItems": true,
+      "minItems": 1,
+      "default": ["user"]
+    },
+    "permissions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastLoginAt": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "loginCount": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 0
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "inactive", "suspended", "deleted"],
+          "default": "active"
+        },
+        "verifiedEmail": { "type": "boolean", "default": false },
+        "verifiedPhone": { "type": "boolean", "default": false },
+        "twoFactorEnabled": { "type": "boolean", "default": false }
+      },
+      "required": ["createdAt", "status"]
+    },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "posts": { "type": "integer", "minimum": 0 },
+        "followers": { "type": "integer", "minimum": 0 },
+        "following": { "type": "integer", "minimum": 0 },
+        "likes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "scores": {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 0
+    },
+    "config": {
+      "type": "object",
+      "patternProperties": {
+        "^feature_": { "type": "boolean" },
+        "^limit_": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "balance": {
+      "type": "number",
+      "multipleOf": 0.01
+    },
+    "rating": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 5
+    },
+    "nullableField": {
+      "type": ["string", "null"]
+    }
+  },
+
+  "required": ["id", "username", "email", "profile", "metadata"],
+
+  "additionalProperties": false,
+
+  "if": {
+    "properties": {
+      "roles": {
+        "contains": { "const": "admin" }
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "adminLevel": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 10
+      }
+    },
+    "required": ["adminLevel"]
+  }
+}

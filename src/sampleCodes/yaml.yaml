@@ -1,0 +1,276 @@
+# YAML Sample Code
+# Demonstrates various syntax features and token types
+
+---
+# Anchors and aliases
+defaults: &defaults
+  adapter: postgres
+  host: localhost
+  pool: 5
+
+# Application configuration
+application:
+  name: "My Application"
+  version: "2.1.0"
+  environment: production
+  debug: false
+
+  # Server settings
+  server:
+    host: 0.0.0.0
+    port: 8080
+    workers: 4
+    timeout: 30s
+    keepalive: 65
+
+  # Database configuration using anchor
+  database:
+    primary:
+      <<: *defaults
+      database: app_production
+      username: app_user
+      password: secret_password
+
+    replica:
+      <<: *defaults
+      database: app_production
+      host: replica.database.local
+      readonly: true
+
+  # Cache configuration
+  cache:
+    driver: redis
+    connection:
+      host: redis.local
+      port: 6379
+      database: 0
+      password: ~  # null value
+
+  # Feature flags (boolean values)
+  features:
+    new_dashboard: true
+    beta_api: false
+    maintenance_mode: off
+    experimental: yes
+
+# Kubernetes-style configuration
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app
+  namespace: production
+  labels:
+    app: web
+    tier: frontend
+    version: v2
+  annotations:
+    kubernetes.io/change-cause: "Update to version 2.1.0"
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9090"
+
+spec:
+  replicas: 3
+  revisionHistoryLimit: 10
+
+  selector:
+    matchLabels:
+      app: web
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: registry.example.com/web:2.1.0
+          imagePullPolicy: Always
+
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: metrics
+              containerPort: 9090
+
+          # Environment variables
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: url
+            - name: LOG_LEVEL
+              value: info
+
+          # Resource limits
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+
+          # Health checks
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
+          # Volume mounts
+          volumeMounts:
+            - name: config
+              mountPath: /etc/config
+              readOnly: true
+            - name: secrets
+              mountPath: /etc/secrets
+              readOnly: true
+
+      # Volumes
+      volumes:
+        - name: config
+          configMap:
+            name: app-config
+        - name: secrets
+          secret:
+            secretName: app-secrets
+
+      # Scheduling
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: web
+                topologyKey: kubernetes.io/hostname
+
+      tolerations:
+        - key: "dedicated"
+          operator: "Equal"
+          value: "web"
+          effect: "NoSchedule"
+
+# Multi-line strings
+strings:
+  # Literal block scalar (preserves newlines)
+  literal: |
+    This is a literal block scalar.
+    It preserves newlines and formatting.
+
+    Empty lines are preserved too.
+      Indentation beyond the indicator is kept.
+
+  # Folded block scalar (folds newlines to spaces)
+  folded: >
+    This is a folded block scalar.
+    Newlines become spaces.
+
+    But blank lines create paragraphs.
+
+  # Chomping indicators
+  strip: |-
+    No trailing newline
+  keep: |+
+    Keep trailing newlines
+
+
+  # Quoted strings
+  single_quoted: 'Single quoted: escape ''apostrophes'''
+  double_quoted: "Double quoted: supports \n escapes and \t tabs"
+
+# Numbers and special values
+numbers:
+  integer: 42
+  negative: -17
+  hex: 0xFF
+  octal: 0o755
+  binary: 0b1010
+  float: 3.14159
+  scientific: 6.022e23
+  infinity: .inf
+  negative_infinity: -.inf
+  not_a_number: .nan
+
+# Dates and timestamps
+dates:
+  date: 2024-01-15
+  datetime: 2024-01-15T09:30:00Z
+  datetime_offset: 2024-01-15T09:30:00+09:00
+  datetime_space: 2024-01-15 09:30:00
+
+# Complex data structures
+users:
+  - id: 1
+    name: Alice
+    email: alice@example.com
+    roles: [admin, user]
+    active: true
+    metadata:
+      created_at: 2024-01-01
+      last_login: 2024-01-15T10:30:00Z
+
+  - id: 2
+    name: Bob
+    email: bob@example.com
+    roles:
+      - user
+      - moderator
+    active: true
+
+# Flow style (JSON-like)
+flow_mapping: {name: "test", value: 42, enabled: true}
+flow_sequence: [1, 2, 3, 4, 5]
+nested_flow: [{a: 1, b: 2}, {a: 3, b: 4}]
+
+# Tags and explicit typing
+typed_values:
+  explicit_string: !!str 123
+  explicit_int: !!int "456"
+  explicit_float: !!float "3.14"
+  explicit_bool: !!bool "yes"
+  explicit_null: !!null ""
+  binary_data: !!binary |
+    R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
+
+# Merge key with override
+merged_config:
+  <<: *defaults
+  host: custom.database.local  # Override the host
+  extra_option: true           # Add new option
+
+# Set (unique values only)
+unique_tags: !!set
+  ? kubernetes
+  ? docker
+  ? helm
+  ? terraform
+
+# Ordered map
+priority_queue: !!omap
+  - first: High priority
+  - second: Medium priority
+  - third: Low priority
+
+...

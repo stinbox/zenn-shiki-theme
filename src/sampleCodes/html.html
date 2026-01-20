@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<!--
+  HTML Sample Code
+  Demonstrates various syntax features and token types
+-->
+<html lang="en" dir="ltr">
+<head>
+  <!-- Meta tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A comprehensive HTML sample demonstrating various elements">
+  <meta name="keywords" content="html, sample, demo, web">
+  <meta name="author" content="Developer">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- Open Graph meta tags -->
+  <meta property="og:title" content="HTML Sample Page">
+  <meta property="og:description" content="Comprehensive HTML demonstration">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://example.com">
+  <meta property="og:image" content="https://example.com/image.png">
+
+  <title>HTML Sample - Comprehensive Demo</title>
+
+  <!-- Preload and preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preload" href="/styles/main.css" as="style">
+  <link rel="preload" href="/scripts/app.js" as="script">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/styles/normalize.css">
+  <link rel="stylesheet" href="/styles/main.css" media="screen">
+  <link rel="stylesheet" href="/styles/print.css" media="print">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Inline styles -->
+  <style>
+    :root {
+      --primary-color: #3b82f6;
+      --text-color: #1f2937;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+    }
+  </style>
+</head>
+<body class="page-body" data-theme="light" data-page-id="sample">
+  <!-- Skip link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header with navigation -->
+  <header class="site-header" role="banner">
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="/" class="logo" aria-label="Home">
+        <img src="/logo.svg" alt="Site Logo" width="120" height="40" loading="lazy">
+      </a>
+
+      <ul class="nav-list" role="menubar">
+        <li role="none"><a href="/" role="menuitem" aria-current="page">Home</a></li>
+        <li role="none"><a href="/about" role="menuitem">About</a></li>
+        <li role="none"><a href="/services" role="menuitem">Services</a></li>
+        <li role="none"><a href="/contact" role="menuitem">Contact</a></li>
+      </ul>
+
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="sr-only">Toggle menu</span>
+        <span class="hamburger" aria-hidden="true"></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Main content -->
+  <main id="main-content" class="main-content" role="main">
+    <!-- Hero section -->
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title">Welcome to Our Site</h1>
+      <p class="hero-subtitle">Discover amazing features and services</p>
+      <a href="#features" class="cta-button">Learn More</a>
+    </section>
+
+    <!-- Article -->
+    <article class="post" itemscope itemtype="https://schema.org/Article">
+      <header class="post-header">
+        <h2 itemprop="headline">Understanding HTML5 Semantics</h2>
+        <div class="post-meta">
+          <time datetime="2024-01-15T09:00:00Z" itemprop="datePublished">January 15, 2024</time>
+          <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+            by <span itemprop="name">John Doe</span>
+          </span>
+        </div>
+      </header>
+
+      <div class="post-content" itemprop="articleBody">
+        <p>This is an <strong>important</strong> paragraph with <em>emphasized</em> text and a
+           <a href="https://example.com" target="_blank" rel="noopener noreferrer">link</a>.</p>
+
+        <blockquote cite="https://example.com/quote">
+          <p>This is a blockquote with a citation.</p>
+          <footer>— <cite>Famous Author</cite></footer>
+        </blockquote>
+
+        <pre><code class="language-javascript">const greeting = "Hello, World!";
+console.log(greeting);</code></pre>
+
+        <figure>
+          <picture>
+            <source srcset="/images/hero.webp" type="image/webp">
+            <source srcset="/images/hero.jpg" type="image/jpeg">
+            <img src="/images/hero.jpg" alt="Hero image description"
+                 width="800" height="400" loading="lazy" decoding="async">
+          </picture>
+          <figcaption>An illustrative image with caption</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <!-- Form section -->
+    <section class="contact-section" aria-labelledby="contact-title">
+      <h2 id="contact-title">Contact Us</h2>
+
+      <form action="/api/contact" method="POST" class="contact-form"
+            novalidate autocomplete="on" enctype="multipart/form-data">
+        <fieldset>
+          <legend>Personal Information</legend>
+
+          <div class="form-group">
+            <label for="name">Full Name <abbr title="required">*</abbr></label>
+            <input type="text" id="name" name="name" required minlength="2" maxlength="100"
+                   placeholder="Enter your name" autocomplete="name" aria-describedby="name-hint">
+            <small id="name-hint">Enter your first and last name</small>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address <abbr title="required">*</abbr></label>
+            <input type="email" id="email" name="email" required
+                   placeholder="you@example.com" autocomplete="email"
+                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone"
+                   placeholder="+1 (555) 123-4567" autocomplete="tel">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Preferences</legend>
+
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject" required>
+              <option value="">Select a subject</option>
+              <optgroup label="Sales">
+                <option value="pricing">Pricing Inquiry</option>
+                <option value="demo">Request Demo</option>
+              </optgroup>
+              <optgroup label="Support">
+                <option value="technical">Technical Support</option>
+                <option value="billing">Billing Question</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message <abbr title="required">*</abbr></label>
+            <textarea id="message" name="message" rows="5" cols="50" required
+                      minlength="10" maxlength="1000"
+                      placeholder="Type your message here..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="attachment">Attachment</label>
+            <input type="file" id="attachment" name="attachment"
+                   accept=".pdf,.doc,.docx,image/*" multiple>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="newsletter" name="newsletter" value="yes">
+            <label for="newsletter">Subscribe to newsletter</label>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Send Message</button>
+          <button type="reset" class="btn btn-secondary">Reset Form</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Data table -->
+    <section aria-labelledby="data-title">
+      <h2 id="data-title">Data Overview</h2>
+      <div class="table-responsive">
+        <table class="data-table">
+          <caption>Monthly statistics for 2024</caption>
+          <thead>
+            <tr>
+              <th scope="col">Month</th>
+              <th scope="col">Users</th>
+              <th scope="col">Revenue</th>
+              <th scope="col">Growth</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">January</th>
+              <td>1,234</td>
+              <td>$12,345</td>
+              <td><data value="15">15%</data></td>
+            </tr>
+            <tr>
+              <th scope="row">February</th>
+              <td>1,456</td>
+              <td>$14,567</td>
+              <td><data value="18">18%</data></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row">Total</th>
+              <td>2,690</td>
+              <td>$26,912</td>
+              <td>—</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-content">
+      <p>&copy; 2024 Company Name. All rights reserved.</p>
+      <address>
+        Contact: <a href="mailto:info@example.com">info@example.com</a>
+      </address>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/scripts/vendor.js" defer></script>
+  <script src="/scripts/app.js" type="module"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "HTML Sample Page"
+  }
+  </script>
+</body>
+</html>
