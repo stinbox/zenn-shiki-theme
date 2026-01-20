@@ -3,6 +3,7 @@ import { useAtomValue } from "jotai";
 import { selectedLanguageAtom } from "../atoms/language";
 import { prismHighlightedCodeAtomFamily } from "../atoms/prism";
 import { CodeBlockSkeleton } from "./CodeBlockSkeleton";
+import { useScrollSync } from "../hooks/useScrollSync";
 import "zenn-content-css";
 
 function PrismCodeContent() {
@@ -10,9 +11,14 @@ function PrismCodeContent() {
   const highlightedHtml = useAtomValue(
     prismHighlightedCodeAtomFamily(language),
   );
+  const { containerRef, handleScroll } = useScrollSync("prism");
 
   return (
-    <div className="znc overflow-auto h-[600px]">
+    <div
+      ref={containerRef}
+      onScroll={handleScroll}
+      className="znc overflow-auto h-[600px]"
+    >
       <pre className={`language-${language}`}>
         <code dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
       </pre>

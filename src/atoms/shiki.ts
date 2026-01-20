@@ -11,11 +11,13 @@ import type { SupportedLanguage } from "../constants/languages";
 import { sampleCodeAtomFamily } from "./sampleCode";
 import { createDiffTransformer } from "../transformers/diffTransformer";
 import "../transformers/diffTransformer.css";
+import zennTheme from "../themes/zenn.json" with { type: "json" };
+import type { ThemeRegistration } from "shiki";
 
 // Shikiハイライターインスタンス（シングルトン）
 export const shikiHighlighterAtom = atom<Promise<Highlighter>>(async () => {
   const highlighter = await createHighlighter({
-    themes: ["nord"],
+    themes: [zennTheme as ThemeRegistration],
     langs: [],
   });
 
@@ -71,8 +73,8 @@ export const shikiHighlightedCodeAtomFamily = atomFamily(
 
       return highlighter.codeToHtml(code, {
         lang: lang === "diff" ? "typescript" : lang,
-        theme: "nord",
-        transformers: [createDiffTransformer()],
+        theme: "zenn",
+        transformers: lang === "diff" ? [createDiffTransformer()] : [],
       });
     })
 );
