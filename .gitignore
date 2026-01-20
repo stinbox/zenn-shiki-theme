@@ -8,9 +8,12 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
-dist-ssr
 *.local
+
+# Next.js
+.next
+out
+next-env.d.ts
 
 # Editor directories and files
 .vscode/*
@@ -23,3 +26,6 @@ dist-ssr
 *.sln
 *.sw?
 .claude/settings.local.json
+
+# Playwright
+.playwright-mcp

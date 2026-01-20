@@ -1,12 +1,17 @@
-import { useAtom } from "jotai";
-import { selectedLanguageAtom } from "../atoms/language";
+"use client";
+
+import { useRouter } from "next/navigation";
 import {
   SUPPORTED_LANGUAGES,
   type SupportedLanguage,
-} from "../constants/languages";
+} from "@/constants/languages";
 
-export function Header() {
-  const [language, setLanguage] = useAtom(selectedLanguageAtom);
+type Props = {
+  currentLang: SupportedLanguage;
+};
+
+export function Header({ currentLang }: Props) {
+  const router = useRouter();
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
@@ -20,8 +25,10 @@ export function Header() {
           </label>
           <select
             id="language-select"
-            value={language}
-            onChange={(e) => setLanguage(e.target.value as SupportedLanguage)}
+            value={currentLang}
+            onChange={(e) => {
+              router.push(`/${e.target.value}`);
+            }}
             className="px-3 py-1.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             {SUPPORTED_LANGUAGES.map((lang) => (

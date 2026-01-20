@@ -1,32 +1,17 @@
-import { Suspense } from "react";
-import { useAtomValue } from "jotai";
-import { selectedLanguageAtom } from "../atoms/language";
-import { prismHighlightedCodeAtomFamily } from "../atoms/prism";
-import { CodeBlockSkeleton } from "./CodeBlockSkeleton";
-import { useScrollSync } from "../hooks/useScrollSync";
+"use client";
+
+import { useScrollSync } from "@/hooks/useScrollSync";
+import type { SupportedLanguage } from "@/constants/languages";
 import "zenn-content-css";
 
-function PrismCodeContent() {
-  const language = useAtomValue(selectedLanguageAtom);
-  const highlightedHtml = useAtomValue(
-    prismHighlightedCodeAtomFamily(language),
-  );
+type Props = {
+  lang: SupportedLanguage;
+  html: string;
+};
+
+export function PrismCodeBlock({ lang, html }: Props) {
   const { containerRef, handleScroll } = useScrollSync("prism");
 
-  return (
-    <div
-      ref={containerRef}
-      onScroll={handleScroll}
-      className="znc overflow-auto h-[600px]"
-    >
-      <pre className={`language-${language}`}>
-        <code dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
-      </pre>
-    </div>
-  );
-}
-
-export function PrismCodeBlock() {
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden">
       <div className="bg-gray-100 px-4 py-2 border-b border-gray-200">
@@ -34,9 +19,15 @@ export function PrismCodeBlock() {
           Prism.js (zenn-content-css)
         </span>
       </div>
-      <Suspense fallback={<CodeBlockSkeleton />}>
-        <PrismCodeContent />
-      </Suspense>
+      <div
+        ref={containerRef}
+        onScroll={handleScroll}
+        className="znc overflow-auto h-[600px]"
+      >
+        <pre className={`language-${lang}`}>
+          <code dangerouslySetInnerHTML={{ __html: html }} />
+        </pre>
+      </div>
     </div>
   );
 }
