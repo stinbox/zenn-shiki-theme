@@ -453,6 +453,12 @@
       }
     },
     {
+      "scope": "meta.object-literal.key",
+      "settings": {
+        "foreground": "#38c7ff"
+      }
+    },
+    {
       "scope": "variable.other.readwrite",
       "settings": {
         "foreground": "#ffffff"
@@ -534,6 +540,12 @@
       "scope": "source.json support.type.property-name",
       "settings": {
         "foreground": "#38c7ff"
+      }
+    },
+    {
+      "scope": "source.json constant.language",
+      "settings": {
+        "foreground": "#ff8fa3"
       }
     },
     {

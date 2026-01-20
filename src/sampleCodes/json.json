@@ -260,21 +260,36 @@
 
   "additionalProperties": false,
 
-  "if": {
-    "properties": {
-      "roles": {
-        "contains": { "const": "admin" }
-      }
+  "examples": [
+    {
+      "id": 12345,
+      "uuid": "550e8400-e29b-41d4-a716-446655440000",
+      "username": "john_doe",
+      "email": "john@example.com",
+      "profile": {
+        "firstName": "John",
+        "lastName": "Doe",
+        "displayName": null,
+        "bio": "Software developer",
+        "avatar": {
+          "url": "https://example.com/avatar.png",
+          "width": 256,
+          "height": 256
+        },
+        "dateOfBirth": "1990-01-15",
+        "age": 34
+      },
+      "metadata": {
+        "createdAt": "2024-01-01T00:00:00Z",
+        "updatedAt": "2024-06-15T12:30:00Z",
+        "lastLoginAt": null,
+        "loginCount": 42,
+        "status": "active"
+      },
+      "nullableField": null,
+      "active": true,
+      "balance": 1234.56,
+      "rating": 4.5
     }
-  },
-  "then": {
-    "properties": {
-      "adminLevel": {
-        "type": "integer",
-        "minimum": 1,
-        "maximum": 10
-      }
-    },
-    "required": ["adminLevel"]
-  }
+  ]
 }
